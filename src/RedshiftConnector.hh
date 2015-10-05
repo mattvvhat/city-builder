@@ -14,9 +14,6 @@ private:
   PGconn   *mConn;
   PGresult *mRes;
 
-  // int         nFields;
-  // int         i, j;
-
 public:
   RedshiftConnector(std::string host,
                     std::string port,
@@ -53,9 +50,6 @@ public:
     PQclear(mRes);
   }
 
-  /**
-   * Return a Vector of Table Names
-   */
   std::vector<std::string> GetTables() {
     std::vector<std::string> table_list;
     int result_status;
