@@ -41,14 +41,16 @@ public:
   }
 
   void Disconnect() {
-  }
-
-  void Clear() {
-    PQclear(mRes);
+    ExitNicely();
   }
 
   void ExitNicely() {
     PQfinish(mConn);
+    mIsConnected = false;
+  }
+
+  void Clear() {
+    PQclear(mRes);
   }
 
   /**
