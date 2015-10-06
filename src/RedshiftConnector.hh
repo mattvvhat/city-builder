@@ -67,6 +67,59 @@ public:
       Clear();
     }
 
+    std::vector<Building> GetLayout(int callback) {
+      // Get list of tables
+      std::vector<std::string> tables = GetTables();
+
+      // Sort tables according to scoring algorithm
+      // ...
+
+      // Shuffle tables
+      // ...
+
+      // Iterate through each
+      for (auto it=tables.begin(); it != tables.end(); ++it) {
+        // callback(GetBuilding(*it));
+        GetBuilding(*it);
+      }
+    }
+
+    std::vector<Building> GetLayout() {
+      // Get list of tables
+      std::vector<std::string> tables = GetTables();
+
+      // Sort tables according to scoring algorithm
+      // ...
+
+      // Shuffle tables
+      // ...
+
+      // Iterate through each
+      for (auto it=tables.begin(); it != tables.end(); ++it) {
+        GetBuilding(*it);
+      }
+    }
+
+    int SqlExecInteger(std::string query, int fail=-1) {
+      PGresult mRes = PQexec(mConn, query.c_str());
+      int result_status = PQresultStatus(mRes);
+      int result = fail;
+      if (result_status == PGRES_TUPLES_OK) {
+        result = PQgetvalue(mRes, 0, 0);
+        Clear();
+      }
+      return result;
+    }
+
+#define BUILDING_BASE_QUERY "SELECT * FROM %s LIMIT 1;"
+#define BUILDING_HEIGHT_QUERY "SELECT COUNT(*) FROM %s LIMIT 1;"
+    Building GetBuilding(const std::string table_name) {
+      Building b;
+      b.base_width = b.base_height = SqlExecInteger(BUILDING_BASE_QUERY);
+      b.height = SqlExecInteger(BUILDING_HEIGHT_QUERY);
+      return b;
+    }
+
     return table_list;
   }
 };

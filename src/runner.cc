@@ -8,34 +8,7 @@
 #include <string>
 #include <vector>
 
-#include "RedshiftConnector.hh"
-
-/**
- * Quit Postgres Connection
- * @param conn postgres connection
- */
-//void exit_nicely(PGconn *conn) {
-//  PQfinish(conn);
-//  exit(1);
-//}
-
-/**
- * Return a List of 
- * @param 
- */
-//void GetTableList(PGresult *res) {
-//  int n_fields = PQnfields(res);
-//  int n_rows   = PQntuples(res);
-//  std::cout << n_rows << "x" << n_fields << "\n";
-//  std::cout << n_rows << "x" << n_fields << "\n";
-//  std::cout << n_rows << "x" << n_fields << "\n";
-//  for (int i=0; i < n_rows; i++) {
-//    for (int j=0; j < n_fields; j++) {
-//      std::cout << "* " << PQgetvalue(res, i, j) << " ";
-//    }
-//    std::cout << "\n";
-//  }
-//}
+#include "RedshiftCityLayoutBuilder.hh"
 
 /**
  * Main
@@ -44,6 +17,14 @@ int main(int argc, char **argv) {
   std::vector<std::string> table_list;
   RedshiftConnector connector(
     );
+
+  RedshiftCityLayoutBuilder city_builder;
+
+  city_builder.Configure("host", "host");
+  city_builder.Configure("port", "port");
+  city_builder.Configure("dname", "dbname");
+  city_builder.Configure("user", "user")
+  city_builder.Configure("pass", "pass");
 
   connector.Connect();
 
